@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damien Rochefort — Monteur &amp; Motion Designer</title>
+<meta name="description" content="Portfolio de Damien Rochefort, monteur et motion designer spécialisé dans les contenus facecam documentaire, éducatif et infopreneuriat.">
+
+<!--
+  ===================================================================
+  GUIDE RAPIDE POUR PERSONNALISER CETTE PAGE
+  ===================================================================
+  Chaque emplacement vidéo/photo (sections "Montage", "Étalonnage" et
+  "Motion design") contient deux choses :
+    1. une div de classe "frame-empty" visible = le cadre vide que
+       vous voyez actuellement à l'écran ;
+    2. juste en dessous, un bloc HTML mis en commentaire, prêt à
+       l'emploi (balise video ou img).
+
+  Pour ajouter un fichier : créez un dossier "videos" et/ou "images" à
+  côté de index.html, déposez-y vos fichiers, puis pour chaque
+  emplacement à remplir :
+    a) supprimez la div "frame-empty"
+    b) retirez les marqueurs de commentaire qui entourent le bloc
+       video ou img juste en dessous, pour l'activer
+    c) vérifiez que le chemin "src" correspond bien au nom de votre fichier
+
+  TARIFS : modifiez librement les prix et listes dans la section
+  "Tarifs" (id="tarifs").
+
+  Tant qu'aucun fichier n'est ajouté, les cadres vides s'affichent
+  élégamment à la place — la page reste donc présentable telle quelle.
+  ===================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sprite SVG : icônes réutilisées dans toute la page -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="icon-star" viewBox="0 0 24 24">
+      <polygon points="12 2.3 14.9 8.7 22 9.5 16.7 14.3 18.2 21.3 12 17.7 5.8 21.3 7.3 14.3 2 9.5 9.1 8.7"/>
+    </symbol>
+    <symbol id="icon-montage" viewBox="0 0 24 24">
+      <rect x="1.5" y="9.5" width="5.5" height="6" rx="1"/>
+      <rect x="8.5" y="9.5" width="9" height="6" rx="1"/>
+      <rect x="19" y="9.5" width="3.5" height="6" rx="1"/>
+      <line x1="8.5" y1="6.5" x2="8.5" y2="19.2"/>
+    </symbol>
+    <symbol id="icon-fusion" viewBox="0 0 24 24">
+      <circle cx="5" cy="6.2" r="2.4"/>
+      <circle cx="5" cy="17.8" r="2.4"/>
+      <circle cx="18" cy="12" r="2.8"/>
+      <line x1="7.1" y1="7.3" x2="15.4" y2="10.9"/>
+      <line x1="7.1" y1="16.7" x2="15.4" y2="13.1"/>
+    </symbol>
+    <symbol id="icon-color" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.7"/>
+      <line x1="12" y1="2.7" x2="12" y2="6.2"/>
+      <line x1="12" y1="17.8" x2="12" y2="21.3"/>
+      <line x1="2.7" y1="12" x2="6.2" y2="12"/>
+      <line x1="17.8" y1="12" x2="21.3" y2="12"/>
+      <circle cx="14.8" cy="9.1" r="1.7" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="icon-audio" viewBox="0 0 24 24">
+      <line x1="2" y1="9.5" x2="2" y2="14.5"/>
+      <line x1="6.4" y1="5.5" x2="6.4" y2="18.5"/>
+      <line x1="10.8" y1="2.5" x2="10.8" y2="21.5"/>
+      <line x1="15.2" y1="6.5" x2="15.2" y2="17.5"/>
+      <line x1="19.6" y1="9.5" x2="19.6" y2="14.5"/>
+    </symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24">
+      <polygon points="8 5.5 19 12 8 18.5" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="icon-arrow-down" viewBox="0 0 24 24">
+      <line x1="12" y1="3" x2="12" y2="19"/>
+      <polyline points="6 13 12 19 18 13"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Cadre fixe façon viseur caméra : motif décoratif présent sur toute la page -->
+<div class="viewfinder" aria-hidden="true">
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
+</div>
+
+<!-- Navigation façon scrubber de montage : un repère par section -->
+<nav class="scrubber" aria-label="Navigation entre les sections">
+  <div class="scrubber-track">
+    <div class="scrubber-playhead" id="playhead"></div>
+  </div>
+  <ol class="scrubber-list">
+    <li><a href="#cover" data-index="0"><span class="tc">00:00</span><span class="lbl">Couverture</span></a></li>
+    <li><a href="#about" data-index="1"><span class="tc">00:01</span><span class="lbl">À propos</span></a></li>
+    <li><a href="#montage" data-index="2"><span class="tc">00:02</span><span class="lbl">Montage</span></a></li>
+    <li><a href="#etalonnage" data-index="3"><span class="tc">00:03</span><span class="lbl">Étalonnage</span></a></li>
+    <li><a href="#motion" data-index="4"><span class="tc">00:04</span><span class="lbl">Motion design</span></a></li>
+    <li><a href="#tarifs" data-index="5"><span class="tc">00:05</span><span class="lbl">Tarifs</span></a></li>
+    <li><a href="#contact" data-index="6"><span class="tc">00:06</span><span class="lbl">Contact</span></a></li>
+  </ol>
+</nav>
+
+<main id="top">
+
+  <!-- ============ 00:00 — COUVERTURE ============ -->
+  <section class="slide cover" id="cover">
+    <div class="cover-grain" aria-hidden="true"></div>
+    <div class="cover-top">
+      <span class="eyebrow">Monteur &amp; Motion&nbsp;Designer</span>
+      <span class="reel">REEL 2026</span>
+    </div>
+
+    <div class="cover-mid">
+      <h1 class="huge">Portfolio<span class="accent-dot">.</span></h1>
+      <p class="cover-name">Damien Rochefort</p>
+    </div>
+
+    <div class="cover-bottom">
+      <a class="contact-link" href="mailto:Damienediting@gmail.com">Damienediting@gmail.com</a>
+      <a class="scroll-hint" href="#about" aria-label="Défiler vers le bas">
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"/></svg>
+      </a>
+      <a class="contact-link" href="tel:+22393029405">+223 93 02 94 05</a>
+    </div>
+  </section>
+
+  <!-- ============ 00:01 — À PROPOS + COMPÉTENCES ============ -->
+  <section class="slide about" id="about">
+    <p class="eyebrow"><span class="tc">00:01</span> — À propos</p>
+
+    <div class="about-grid">
+      <div class="about-intro">
+        <h2 class="display-md">Bonjour.</h2>
+        <p class="lede">Monteur &amp; Motion Designer</p>
+        <p class="body-text">
+          Je suis Damien Rochefort, monteur et motion designer polyvalent.
+          Je me spécialise dans les contenus facecam — formats documentaire,
+          éducatif et infopreneuriat — où le rythme et la clarté font toute
+          la différence. À l'aise également en motion design et en
+          étalonnage, j'aime donner à chaque vidéo une identité visuelle
+          propre à elle. Autonome et minutieux, je travaille aussi bien
+          seul qu'au sein d'une équipe créative.
+        </p>
+      </div>
+
+      <div class="about-skills">
+        <h3 class="display-sm">DaVinci Resolve</h3>
+        <p class="skills-caption">Mon niveau, espace de travail par espace de travail</p>
+
+        <ul class="skill-list">
+          <li class="skill-row">
+            <svg class="skill-icon" aria-hidden="true"><use href="#icon-montage"/></svg>
+            <div class="skill-info">
+              <div class="skill-head">
+                <span class="skill-name">Montage</span>
+                <span class="stars" style="--rating:60%" role="img" aria-label="3 étoiles sur 5">
+                  <span class="stars-bg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                  <span class="stars-fg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                </span>
+              </div>
+              <p class="skill-note">Structuration de rushes, coupes franches et rythmage pour formats parlés et facecam.</p>
+            </div>
+          </li>
+
+          <li class="skill-row">
+            <svg class="skill-icon" aria-hidden="true"><use href="#icon-fusion"/></svg>
+            <div class="skill-info">
+              <div class="skill-head">
+                <span class="skill-name">Fusion</span>
+                <span class="stars" style="--rating:70%" role="img" aria-label="3,5 étoiles sur 5">
+                  <span class="stars-bg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                  <span class="stars-fg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                </span>
+              </div>
+              <p class="skill-note">Compositing et animations graphiques pour incrustations, génériques et habillages.</p>
+            </div>
+          </li>
+
+          <li class="skill-row">
+            <svg class="skill-icon" aria-hidden="true"><use href="#icon-color"/></svg>
+            <div class="skill-info">
+              <div class="skill-head">
+                <span class="skill-name">Étalonnage</span>
+                <span class="stars" style="--rating:60%" role="img" aria-label="3 étoiles sur 5">
+                  <span class="stars-bg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                  <span class="stars-fg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                </span>
+              </div>
+              <p class="skill-note">Corrections colorimétriques et ambiances pour une image cohérente et soignée.</p>
+            </div>
+          </li>
+
+          <li class="skill-row">
+            <svg class="skill-icon" aria-hidden="true"><use href="#icon-audio"/></svg>
+            <div class="skill-info">
+              <div class="skill-head">
+                <span class="skill-name">Fairlight</span>
+                <span class="stars" style="--rating:50%" role="img" aria-label="2,5 étoiles sur 5">
+                  <span class="stars-bg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                  <span class="stars-fg">
+                    <svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg><svg class="icon-star"><use href="#icon-star"/></svg>
+                  </span>
+                </span>
+              </div>
+              <p class="skill-note">Nettoyage et mixage audio pour un rendu clair, sans distraction.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 00:02 — MONTAGE (espace vidéos) ============ -->
+  <section class="slide" id="montage">
+    <p class="eyebrow"><span class="tc">00:02</span> — Montage</p>
+    <h2 class="display-md">Sélection de montages</h2>
+    <p class="lede small">Deux projets représentatifs de mon travail de montage facecam.</p>
+ <div class="showcase-grid two">
+  <figure class="frame">
+    <div class="frame-box">
+     <iframe class="frame-media" src="https://www.youtube.com/embed/DFuKt4UrKDc" title="Projet 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg>
+      <span>Projet 01</span>
+    </div> <figcaption>
+      <span class="cap-title">Projet 01</span>
+      <span class="cap-note">Ajoutez ici le titre et le contexte du montage.</span>
+    </figcaption>
+  </figure>
+
+  <figure class="frame">
+    <div class="frame-box">
+     <iframe class="frame-media" src="https://www.youtube.com/embed/vd8nBn_h2lY" title="Projet 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg>
+      <span>Projet 02</span>
+    </div> <figcaption>
+      <span class="cap-title">Projet 02</span>
+      <span class="cap-note">Ajoutez ici le titre et le contexte du montage.</span>
+    </figcaption>
+  </figure>
+</div>
+        <figcaption>
+          <span class="cap-title">Projet 02</span>
+          <span class="cap-note">Ajoutez ici le titre et le contexte du montage.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 00:03 — ÉTALONNAGE (avant / après photos) ============ -->
+  <section class="slide" id="etalonnage">
+    <p class="eyebrow"><span class="tc">00:03</span> — Étalonnage</p>
+    <h2 class="display-md">Avant / Après</h2>
+    <p class="lede small">Un aperçu de mon travail de correction et d'harmonisation des couleurs.</p>
+
+    <div class="compare-stack">
+      <div class="compare-pair">
+        <figure class="frame half">
+          <div class="frame-box">
+            
+             <img class="frame-media" src="etalo1.png" alt="Photo avant étalonnage — projet 01"><span>Avant</span></div>
+        </figure>
+        <figure class="frame half">
+          <div class="frame-box">
+            <img class="frame-media" src="etalo2.png" alt="Photo avant étalonnage — projet 01"><span>Après</span></div>
+          </div>
+          <figcaption><span class="cap-tag accent">Avant</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="compare-pair">
+        <figure class="frame half">
+          <div class="frame-box">
+            <img class="frame-media" src="etalo1_2.png" alt="Photo avant étalonnage — projet 01"><span>Avant</span></div>
+         </figure>
+        <figure class="frame half">
+          <div class="frame-box">
+            <img class="frame-media" src="etalo2_2.png" alt="Photo avant étalonnage — projet 01"><span>Après</span></div>
+          </div>
+          <figcaption><span class="cap-tag accent">Après</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 00:04 — MOTION DESIGN (avant / après vidéos) ============ -->
+  <section class="slide" id="motion">
+    <p class="eyebrow"><span class="tc">00:04</span> — Motion design</p>
+    <h2 class="display-md">Avant / Après</h2>
+    <p class="lede small">L'impact du motion design sur la mise en scène d'une vidéo.</p>
+
+    <div class="compare-stack">
+      <div class="compare-pair">
+        <figure class="frame half">
+          <div class="frame-box">
+            <iframe class="frame-media" src="https://www.youtube.com/embed/w4roETQzZ3w" title="Projet 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              <svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg>
+              <span>Avant</span>
+            </div>
+          <figcaption><span class="cap-tag">Avant</span></figcaption>
+        </figure>
+        <figure class="frame half">
+          <div class="frame-box">
+           <iframe class="frame-media" src="https://www.youtube.com/embed/6SXa3LpJrIQ" title="Projet 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </video>
+              <svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg>
+              <span>Après</span>
+            </div>
+ 
+          </div>
+          <figcaption><span class="cap-tag accent">Après</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 00:05 — TARIFS ============ -->
+  <section class="slide" id="tarifs">
+    <p class="eyebrow"><span class="tc">00:05</span> — Tarifs</p>
+    <h2 class="display-md">Mes formules</h2>
+    <p class="lede small">Trois formules pensées pour s'adapter à votre projet. Modifiable selon vos besoins.</p>
+
+    <div class="pricing-grid">
+      <article class="price-card">
+        <h3 class="price-name">Essentiel</h3>
+        <p class="price-amount">250&nbsp;€</p>
+        <p class="price-desc">Pour une vidéo efficace, prête à publier rapidement.</p>
+        <ul class="price-list">
+          <li>1 vidéo (10&nbsp;min max)</li>
+          <li>2 shorts</li>
+          <li>Étalonnage rapide</li>
+          <li>Rythmage dynamique</li>
+          <li>1 retours possibles</li>
+          <li>Livraison sous 5 jours</li>
+        </ul>
+      </article>
+
+      <article class="price-card featured">
+        <span class="price-flag">Le plus choisi</span>
+        <h3 class="price-name">Pro</h3>
+        <p class="price-amount">470&nbsp;€</p>
+        <p class="price-desc">Pour un projet plus complet, avec plus de profondeur.</p>
+        <ul class="price-list">
+          <li>2 vidéos (10&nbsp;min max chacune)</li>
+          <li>2 short</li>
+          <li>Étalonnage poussé</li>
+          <li>Motion design simple</li>
+          <li>Rythmage complet</li>
+          <li>2 retours possibles (sous 2 jours)</li>
+          <li>Livraison sous 7 jours max (par vidéo)</li>
+        </ul>
+      </article>
+
+      <article class="price-card">
+        <h3 class="price-name">Premium</h3>
+        <p class="price-amount">825&nbsp;€</p>
+        <p class="price-desc">Pour un projet ambitieux, traité de A à Z.</p>
+        <ul class="price-list">
+          <li>2 vidéos (15&nbsp;min max chacune)</li>
+          <li>3 shorts</li>
+          <li>Étalonnage poussé</li>
+          <li>Motion design + assets spécifiques</li>
+          <li>3 retours possibles (sous 4 jours)</li>
+          <li>Livraison prioritaire sous 5 jours max (par vidéo)</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 00:06 — CONTACT / MERCI ============ -->
+  <section class="slide contact" id="contact">
+    <p class="eyebrow"><span class="tc">00:06</span> — Contact</p>
+    <h2 class="huge small-huge">Merci<span class="accent-dot">.</span></h2>
+    <p class="lede">Encore disponible pour de nouveaux projets.</p>
+
+    <div class="contact-block">
+      <a class="contact-big" href="mailto:Damienediting@gmail.com">Damienediting@gmail.com</a>
+      <a class="contact-big" href="tel:+22393029405">+223 93 02 94 05</a>
+    </div>
+
+    <p class="footer-note">Damien Rochefort — Monteur &amp; Motion Designer — 2026</p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main .slide'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.scrubber-list a'));
+  var playhead = document.getElementById('playhead');
+
+  function setActive(index) {
+    navLinks.forEach(function (link, i) {
+      link.classList.toggle('active', i === index);
+    });
+    if (playhead && navLinks.length > 1) {
+      var pct = (index / (navLinks.length - 1)) * 100;
+      playhead.style.top = pct + '%';
+    }
+  }
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var idx = sections.indexOf(entry.target);
+          if (idx > -1) setActive(idx);
+        }
+      });
+    }, { threshold: 0.55 });
+    sections.forEach(function (s) { observer.observe(s); });
+  }
+
+  navLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
